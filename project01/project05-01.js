@@ -4,8 +4,8 @@
       Project 05-01
 
       Project to present an online quiz with a countdown clock
-      Author: 
-      Date:   
+      Author: Vangara Manish
+      Date:   02/20/2025
 
       Filename: project05-01.js
 */
@@ -14,6 +14,7 @@
 // and the correct answers to each quiz question
 const quizTime = 10;
 const correctAnswers = ["10", "4", "-6", "5", "-7"];
+
 
 // Elements in the quiz page
 let startQuiz = document.getElementById("startquiz");
@@ -26,7 +27,34 @@ let timeLeft = quizTime;
 
 // Declare the ID for timed commands
 // and the node list for questions
+let timeID;
+let questionList = document.querySelectorAll("div#quiz input");
 
+startQuiz.onclick = function() {
+   overlay.className = "showquiz";
+   timeID = window.setInterval(countdown, 1000);
+}
+
+// countdown function
+function countdown() {
+   if (timeLeft == 0) {
+      clearInterval(timeID);
+      let totalCorrect = checkAnswers();
+
+      if (totalCorrect == correctAnswers.length) {
+         window.alert("Congratulations, You scored 100%");
+      } else{
+         let wrongAnswers = correctAnswers.length - totalCorrect;
+         window.alert(`You got ${wrongAnswers} Wrong Answers`);
+         timeLeft = quizTime;
+         quizClock.value = timeLeft;
+         overlay.className = "hidequiz";
+      }
+   } else {
+      timeLeft--;
+      quizClock.value = timeLeft;
+   }
+}
 
 
 
